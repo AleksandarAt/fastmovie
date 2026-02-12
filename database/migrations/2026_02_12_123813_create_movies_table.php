@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('image');
+            $table->string('poster_image')->nullable();
             $table->string('trailer_url')->nullable();
             $table->string('genre');
             $table->integer('age_rating');
             $table->string('language');
+            $table->string('country');
+            $table->integer('duration'); // in minutes
+            $table->date('release_date');
             $table->timestamps();
         });
     }
