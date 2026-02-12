@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\MovieAdminController;
+use App\Http\Controllers\ScanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect()->route('reservations.index');
     })->name('dashboard');
 
     // Profiel
@@ -37,13 +38,19 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Reservering maken
-    Route::post('/reserve/{show}', [ReservationController::class, 'store'])
-        ->name('reserve.store');
-
-    // Mijn reserveringen
+    // Reserveringen
     Route::get('/my-reservations', [ReservationController::class, 'index'])
         ->name('reservations.index');
+    Route::post('/reservations', [ReservationController::class, 'store'])
+        ->name('reservations.store');
+    Route::get('/reservations/{id}', [ReservationController::class, 'show'])
+        ->name('reservations.show');
+    Route::post('/reservations/{id}/snacks', [ReservationController::class, 'addSnacks'])
+        ->name('reservations.addSnacks');
+    Route::post('/reservations/{id}/pay', [ReservationController::class, 'pay'])
+        ->name('reservations.pay');
+    Route::get('/reservations/{id}/download', [ReservationController::class, 'download'])
+        ->name('reservations.download');
 });
 
 
@@ -56,12 +63,18 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
     // Admin dashboard
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/', [MovieAdminController::class, 'dashboard'])->name('dashboard');
 
     // CRUD films
     Route::resource('movies', MovieAdminController::class);
+    
+    // Reserveringen per film
+    Route::get('/movies/{movie}/reservations', [MovieAdminController::class, 'showReservations'])
+        ->name('movies.reservations');
+
+    // Ticket scanner
+    Route::get('/scan', [ScanController::class, 'scan'])->name('scan');
+    Route::get('/scan/{ticketCode}', [ScanController::class, 'verify'])->name('scan.verify');
 
 });
 
