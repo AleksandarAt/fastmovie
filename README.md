@@ -1,59 +1,246 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FastMovie Renesse - Bioscoop Applicatie
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Een complete Laravel bioscoop applicatie voor het boeken van filmtickets met admin functionaliteit, QR-code scanning, en PDF tickets.
 
-## About Laravel
+## 🎬 Functionaliteiten
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Voor Bezoekers
+- ✅ Overzicht van alle films met geavanceerde zoek- en filterfunctionaliteit
+- ✅ Gedetailleerde filminformatie met trailers
+- ✅ Online reservering maken voor vertoningen
+- ✅ Stoelen selectie en snacks bestellen
+- ✅ Veilige online betaling
+- ✅ QR-code tickets ontvangen en downloaden als PDF
+- ✅ Persoonlijk reserveringen overzicht
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Voor Beheerders
+- ✅ Admin dashboard met statistieken en inzichten
+- ✅ Volledige CRUD functionaliteit voor films
+- ✅ Overzicht van alle reserveringen per film
+- ✅ QR-code scanner voor ticket validatie
+- ✅ Statistieken over verkoop en populariteit
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🎨 Design
 
-## Learning Laravel
+De applicatie gebruikt het FastMovie Renesse kleurenschema:
+- **Primary Color**: `#FF6000` (Oranje)
+- **Secondary Color**: `#454545` (Donkergrijs)
+- **Accent Colors**: `#FFA559` en `#FFE6C7`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 📋 Vereisten
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2 of hoger
+- Composer
+- Node.js & NPM
+- SQLite (of een andere database naar keuze)
 
-## Laravel Sponsors
+## 🚀 Installatie & Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone de repository
 
-### Premium Partners
+```bash
+git clone https://github.com/AleksandarAt/fastmovie.git
+cd fastmovie
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Installeer dependencies
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Configureer environment
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 4. Configureer database
 
-## Security Vulnerabilities
+De applicatie is standaard geconfigureerd voor SQLite. Als je een andere database wilt gebruiken, pas dan de `.env` file aan:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=sqlite
+# Indien MySQL:
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=fastmovie
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
 
-## License
+### 5. Maak de database aan (voor SQLite)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+touch database/database.sqlite
+```
+
+### 6. Run migraties en seeders
+
+```bash
+php artisan migrate --seed
+```
+
+Dit creëert de database tabellen en vult ze met demo data:
+- 15 realistische films met informatie
+- Vertoningen voor de komende 14 dagen
+- 1 admin account
+- 3 normale gebruikers
+- Sample reserveringen
+
+### 7. Link storage
+
+```bash
+php artisan storage:link
+```
+
+### 8. Build frontend assets
+
+```bash
+npm run build
+```
+
+### 9. Start de applicatie
+
+```bash
+php artisan serve
+```
+
+De applicatie is nu beschikbaar op: [http://localhost:8000](http://localhost:8000)
+
+## 👤 Login Credentials
+
+### Admin Account
+- **Email**: admin@fastmovie.nl
+- **Password**: password
+
+### Normale Gebruikers
+- **Email**: jan@example.com, maria@example.com, peter@example.com
+- **Password**: password (voor alle accounts)
+
+## 📁 Project Structuur
+
+```
+fastmovie/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── MovieController.php
+│   │   │   ├── MovieAdminController.php
+│   │   │   ├── ReservationController.php
+│   │   │   └── ScanController.php
+│   │   └── Middleware/
+│   │       └── IsAdmin.php
+│   └── Models/
+│       ├── Movie.php
+│       ├── Show.php
+│       ├── Reservation.php
+│       └── User.php
+├── database/
+│   ├── migrations/
+│   └── seeders/
+│       ├── MovieSeeder.php
+│       ├── ShowSeeder.php
+│       ├── UserSeeder.php
+│       └── ReservationSeeder.php
+├── resources/
+│   └── views/
+│       ├── movies/
+│       │   ├── index.blade.php (Homepage)
+│       │   └── show.blade.php (Film details)
+│       ├── reservations/
+│       │   ├── index.blade.php (Mijn reserveringen)
+│       │   ├── show.blade.php (Ticket details)
+│       │   └── ticket-pdf.blade.php (PDF template)
+│       └── admin/
+│           ├── dashboard.blade.php
+│           ├── scan.blade.php (QR scanner)
+│           └── movies/
+│               ├── index.blade.php
+│               ├── create.blade.php
+│               └── edit.blade.php
+└── routes/
+    └── web.php
+```
+
+## 🔐 Beveiligings Features
+
+- ✅ CSRF bescherming op alle forms
+- ✅ Admin middleware voor beschermde routes
+- ✅ Password hashing met Laravel's bcrypt
+- ✅ Authenticatie via Laravel Breeze
+- ✅ Unieke ticket codes voor reserveringen
+- ✅ QR code validatie voor tickets
+
+## 📦 Gebruikte Packages
+
+- **laravel/breeze** - Authenticatie scaffolding
+- **simplesoftwareio/simple-qrcode** - QR code generatie
+- **barryvdh/laravel-dompdf** - PDF generatie
+- **tailwindcss** - Frontend styling
+
+## 🧪 Testing
+
+Run de tests met:
+
+```bash
+php artisan test
+```
+
+## 🛠️ Development
+
+Voor development met hot module reloading:
+
+```bash
+npm run dev
+```
+
+## 📝 Database Schema
+
+### Movies
+- title, description, poster_image, trailer_url
+- genre, age_rating, language, country
+- duration, release_date
+
+### Shows
+- movie_id, show_date, show_time
+- available_seats, price
+
+### Reservations
+- user_id, show_id, seats, seat_numbers (JSON)
+- total_price, status (pending/paid/cancelled)
+- payment_method, ticket_code (unique)
+- snacks (JSON)
+
+### Users
+- name, email, password
+- is_admin (boolean)
+
+## 🎯 Toekomstige Verbeteringen
+
+- [ ] Email notificaties bij reserveringen
+- [ ] Echte payment gateway integratie (Mollie/Stripe)
+- [ ] Reviews en ratings systeem
+- [ ] Social media integratie
+- [ ] Multi-language ondersteuning
+- [ ] Geavanceerde stoelen selectie met zaalindeling
+- [ ] API endpoints voor mobiele app
+
+## 📄 License
+
+Dit project is open-source software gelicenseerd onder de [MIT license](https://opensource.org/licenses/MIT).
+
+## 👥 Contributors
+
+- Aleksandar At - Initial development
+
+## 📞 Contact
+
+Voor vragen of suggesties, neem contact op via GitHub Issues.
+
+---
+
+Geniet van FastMovie Renesse! 🎬🍿
